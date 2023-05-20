@@ -41,5 +41,15 @@ export default class Order {
         if (this._items.length === 0) {
             throw new Error('At least one order item must be specified')
         }
+
+        const someOrderItemHasInvalidQuantity = this._items.some(
+            (item) => item.quantity <= 0
+        )
+
+        if (someOrderItemHasInvalidQuantity) {
+            throw new Error(
+                'The quantity of order items must be greater than 0'
+            )
+        }
     }
 }
