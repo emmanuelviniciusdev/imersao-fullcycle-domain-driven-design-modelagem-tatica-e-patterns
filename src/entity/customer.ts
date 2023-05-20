@@ -1,12 +1,14 @@
+import Address from '../value-object/address'
+
 /**
  * Entidade anêmica
  */
-class Customer {
-    _id: string
-    _name: string
-    _address: string
+export default class Customer {
+    private _id: string
+    private _name: string
+    private _address: Address
 
-    constructor(id: string, name: string, address: string) {
+    constructor(id: string, name: string, address: Address) {
         this._id = id
         this._name = name
         this._address = address
@@ -20,7 +22,7 @@ class Customer {
         return this._name
     }
 
-    get address(): string {
+    get address(): Address {
         return this._address
     }
 }
