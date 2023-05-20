@@ -27,12 +27,12 @@ describe('Order Unit Tests', () => {
     it('should correctly calculate the order price', () => {
         const orderItems = [
             new OrderItem('1', 'Pumpkin', 0.8),
-            new OrderItem('2', 'Grapes', 1.2),
-            new OrderItem('3', 'Apple', 0.5),
+            new OrderItem('2', 'Grapes', 1.2, 2),
+            new OrderItem('3', 'Apple', 0.5, 4),
         ]
 
         const order = new Order('1', '1', orderItems)
 
-        expect(order.total).toBe(2.5)
+        expect(order.total).toBe(5.2)
     })
 })
