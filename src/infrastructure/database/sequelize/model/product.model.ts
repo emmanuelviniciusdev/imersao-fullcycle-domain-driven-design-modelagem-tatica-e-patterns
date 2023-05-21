@@ -3,7 +3,7 @@ import { Column, Model, PrimaryKey, Table } from 'sequelize-typescript'
 @Table({ tableName: 'tb_product', timestamps: false })
 export default class ProductModel extends Model {
     @PrimaryKey
-    @Column
+    @Column({ allowNull: false })
     declare id: string
 
     @Column({ allowNull: false })

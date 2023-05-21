@@ -23,6 +23,14 @@ describe('ProductRepository Integration Tests', () => {
         await sequelize.close()
     })
 
+    it('should throw an error if product was not found in the database', async () => {
+        const productRepository = new ProductRepository()
+
+        await expect(
+            async () => await productRepository.find('foo-123')
+        ).rejects.toThrowError('Product with ID foo-123 not found')
+    })
+
     it('should find a persisted product in the database by ID', async () => {
         const productRepository = new ProductRepository()
 

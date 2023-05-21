@@ -11,22 +11,28 @@ export default class Address {
         this._city = city
     }
 
-    validate() {
-        if (!this._street) {
-            throw new Error('street is required')
-        }
+    get street() {
+        return this._street
+    }
 
-        if (!this._number) {
-            throw new Error('number is required')
-        }
+    get number() {
+        return this._number
+    }
 
-        if (!this._zipCode) {
-            throw new Error('zipCode is required')
-        }
+    get zipCode() {
+        return this._zipCode
+    }
 
-        if (!this._city) {
-            throw new Error('city is required')
-        }
+    get city() {
+        return this._city
+    }
+
+    get isNotEmpty() {
+        return !this.isEmpty
+    }
+
+    get isEmpty() {
+        return !this._street && !this._number && !this._zipCode && !this._city
     }
 
     toString() {

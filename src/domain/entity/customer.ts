@@ -7,12 +7,18 @@ export default class Customer {
     private _active: boolean
     private _rewardPoints: number
 
-    constructor(id: string, name: string, address?: Address) {
+    constructor(
+        id: string,
+        name: string,
+        address?: Address,
+        active?: boolean,
+        rewardPoints?: number
+    ) {
         this._id = id
         this._name = name
         this._address = address
-        this._active = false
-        this._rewardPoints = 0
+        this._active = active ?? false
+        this._rewardPoints = rewardPoints ?? 0
 
         this._validate()
     }
