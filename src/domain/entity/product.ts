@@ -11,6 +11,10 @@ export default class Product {
         this._validate()
     }
 
+    changeName(name: string) {
+        this._name = name
+    }
+
     changePrice(price: number) {
         this._price = price
     }

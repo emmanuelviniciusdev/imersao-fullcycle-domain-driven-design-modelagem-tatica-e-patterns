@@ -4,6 +4,7 @@ import OrderService from './order.service'
 import Customer from '../entity/customer'
 
 jest.mock('uuid', () => ({ v4: () => 'random-uuid-v4' }))
+
 describe('OrderService Unit Tests', () => {
     it('should create an order, successfully calculating reward points and defining it to customer', () => {
         const orderItems = [
