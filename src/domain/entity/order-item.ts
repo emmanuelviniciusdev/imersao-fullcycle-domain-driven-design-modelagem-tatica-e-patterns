@@ -38,4 +38,12 @@ export default class OrderItem {
     get quantity() {
         return this._quantity
     }
+
+    get productId() {
+        return this._productId
+    }
+
+    changeName(name: string) {
+        this._name = name
+    }
 }

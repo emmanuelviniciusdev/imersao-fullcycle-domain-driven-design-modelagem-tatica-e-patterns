@@ -29,6 +29,14 @@ export default class Order {
         return this._items
     }
 
+    changeItems(items: OrderItem[]) {
+        this._items = items
+    }
+
+    changeCustomerId(customerId: string) {
+        this._customerId = customerId
+    }
+
     private _validate() {
         if (!this._id) {
             throw new Error('ID is required')
