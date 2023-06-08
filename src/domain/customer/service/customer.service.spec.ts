@@ -1,25 +1,20 @@
 import Address from '../value-object/address'
 import { CustomerService } from './customer.service'
-import { EventDispatcher } from '../../@shared/event/event-dispatcher'
-import CustomerCreatedEvent from '../event/customer-created.event'
 import Customer from '../entity/customer'
 import CustomerUpdatedEvent from '../event/customer-updated.event'
-
-var mockEventDispatcherNotify = jest.fn()
+import CustomerCreatedEvent from '../event/customer-created.event'
 
 jest.mock('uuid', () => ({ v4: () => 'random-uuid-v4' }))
-
-jest.mock('../../@shared/event/event-dispatcher', () => ({
-    EventDispatcher: jest.fn().mockImplementation(() => ({
-        notify: mockEventDispatcherNotify,
-        register: jest.fn(),
-    })),
-}))
 
 jest.useFakeTimers().setSystemTime(new Date('2001-01-01'))
 
 describe('CustomerService Unit Tests', () => {
     it('should successfully update a customer', () => {
+        const spyEventDispatcherNotify = jest.spyOn(
+            CustomerService.eventDispatcher,
+            'notify'
+        )
+
         const address = new Address('Street X', '1', '00000-00', 'Montreal')
 
         const customer = new Customer('1', 'Emmanuel Vinícius', address)
@@ -28,11 +23,9 @@ describe('CustomerService Unit Tests', () => {
 
         CustomerService.updateCustomerAddress(customer, newAddress)
 
-        const eventDispatcher = new EventDispatcher()
+        expect(spyEventDispatcherNotify).toHaveBeenCalledTimes(1)
 
-        expect(eventDispatcher.notify).toHaveBeenCalledTimes(1)
-
-        expect(eventDispatcher.notify).toHaveBeenCalledWith(
+        expect(spyEventDispatcherNotify).toHaveBeenCalledWith(
             'CustomerUpdatedEvent',
             new CustomerUpdatedEvent({
                 customerId: customer.id,
@@ -47,6 +40,11 @@ describe('CustomerService Unit Tests', () => {
     })
 
     it('should successfully create a customer', () => {
+        const spyEventDispatcherNotify = jest.spyOn(
+            CustomerService.eventDispatcher,
+            'notify'
+        )
+
         const address = new Address('Street X', '1', '00000-00', 'Montreal')
 
         const customer = CustomerService.createCustomer(
@@ -54,11 +52,9 @@ describe('CustomerService Unit Tests', () => {
             address
         )
 
-        const eventDispatcher = new EventDispatcher()
+        expect(spyEventDispatcherNotify).toHaveBeenCalledTimes(1)
 
-        expect(eventDispatcher.notify).toHaveBeenCalledTimes(1)
-
-        expect(eventDispatcher.notify).toHaveBeenCalledWith(
+        expect(spyEventDispatcherNotify).toHaveBeenCalledWith(
             'CustomerCreatedEvent',
             new CustomerCreatedEvent({ customer })
         )

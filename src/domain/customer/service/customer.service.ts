@@ -9,17 +9,17 @@ import UpdateReportsAboutAddressesWhenCustomerAddressIsUpdatedHandler from '../e
 import CustomerUpdatedEvent from '../event/customer-updated.event'
 
 export class CustomerService {
+    static eventDispatcher = new EventDispatcher()
+
     static updateCustomerAddress(customer: Customer, newAddress?: Address) {
         customer.changeAddress(newAddress)
 
-        const eventDispatcher = new EventDispatcher()
-
-        eventDispatcher.register(
+        this.eventDispatcher.register(
             'CustomerUpdatedEvent',
             new UpdateReportsAboutAddressesWhenCustomerAddressIsUpdatedHandler()
         )
 
-        eventDispatcher.notify(
+        this.eventDispatcher.notify(
             'CustomerUpdatedEvent',
             new CustomerUpdatedEvent({
                 customerId: customer.id,
@@ -43,19 +43,17 @@ export class CustomerService {
             rewardPoints
         )
 
-        const eventDispatcher = new EventDispatcher()
-
-        eventDispatcher.register(
+        this.eventDispatcher.register(
             'CustomerCreatedEvent',
             new SendActivationCodeByEmailWhenCustomerIsCreatedHandler()
         )
 
-        eventDispatcher.register(
+        this.eventDispatcher.register(
             'CustomerCreatedEvent',
             new UpdateReportsAboutCustomersWhenCustomerIsCreatedHandler()
         )
 
-        eventDispatcher.notify(
+        this.eventDispatcher.notify(
             'CustomerCreatedEvent',
             new CustomerCreatedEvent({ customer })
         )
